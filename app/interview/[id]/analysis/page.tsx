@@ -12,15 +12,14 @@ import PreviousNextBtn from "@/components/AnalysisPage/PreviousNextBtn";
 import InterviewNav from "@/components/interview/InterviewNav";
 
 interface AnalysisProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function AnalysisPage({ params }: AnalysisProps) {
   // unwrap params using React.use()
-  const unwrappedParams = use(params as unknown as Promise<{ id: string }>);
-  const interviewId = unwrappedParams.id;
+  const { id: interviewId } = use(params);
 
   const router = useRouter();
   const [interview, setInterview] = useState<any>(null);

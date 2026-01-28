@@ -8,7 +8,7 @@ import { sendToN8nMentor } from "@/lib/n8nmentoragent";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -27,7 +27,8 @@ export async function POST(
     const userId = await getUserIdFromToken(token);
 
     // get interview id from params
-    const interviewId = params.id;
+    // get interview id from params
+    const interviewId = (await params).id;
     console.log(`Completing interview: ${interviewId}`);
 
     //find the interview
@@ -88,14 +89,14 @@ export async function POST(
     const resume = interview.resumeUrl
       ? { url: interview.resumeUrl }
       : interview.resumeText
-      ? { text: interview.resumeText }
-      : null;
+        ? { text: interview.resumeText }
+        : null;
 
     // Extract job description from workflowQuestions if available
-    const jobDescription = 
-      interview.workflowQuestions && 
-      typeof interview.workflowQuestions === 'object' && 
-      'JobDescription' in interview.workflowQuestions
+    const jobDescription =
+      interview.workflowQuestions &&
+        typeof interview.workflowQuestions === 'object' &&
+        'JobDescription' in interview.workflowQuestions
         ? String(interview.workflowQuestions.JobDescription || '')
         : null;
 
@@ -150,7 +151,7 @@ export async function POST(
     interview.feedback = feedback;
     interview.status = "completed";
     interview.completedAt = new Date();
-    
+
     // Set result based on overall score
     interview.result = overallScore >= 70 ? "passed" : overallScore >= 50 ? "passed-with-notes" : "failed";
 

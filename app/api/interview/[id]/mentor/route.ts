@@ -6,7 +6,7 @@ import { sendToN8nMentor } from "@/lib/n8nmentoragent";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -25,7 +25,7 @@ export async function POST(
     const userId = await getUserIdFromToken(token);
 
     // get interview id from params
-    const interviewId = params.id;
+    const interviewId = (await params).id;
     console.log(`Triggering mentor review for interview: ${interviewId}`);
 
     //find the interview
@@ -59,13 +59,13 @@ export async function POST(
         );
       } else {
         console.log("Did not send to n8n mentor:", mentorResult.reason);
-        
+
         // If the issue is no_result, set a result based on score and retry
         if (mentorResult.reason === 'no_result' && interview.overallScore) {
           console.log("Setting result based on overall score and retrying");
           interview.result = interview.overallScore >= 70 ? "passed" : interview.overallScore >= 50 ? "passed-with-notes" : "failed";
           await interview.save();
-          
+
           const retryResult = await sendToN8nMentor(interview.toObject(), token);
           if (retryResult.sent) {
             return NextResponse.json(
@@ -79,7 +79,7 @@ export async function POST(
             );
           }
         }
-        
+
         return NextResponse.json(
           {
             message: "Mentor review could not be triggered",

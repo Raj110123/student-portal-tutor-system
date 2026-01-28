@@ -7,9 +7,9 @@ import InterviewSession from "@/components/interviewSession/InterviewSession";
 import InterviewNav from "@/components/interview/InterviewNav";
 
 interface InterviewPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // define interview interfcae
@@ -43,8 +43,7 @@ interface Interview {
 
 export default function InterviewPage({ params }: InterviewPageProps) {
   // unwrap params using react.use()
-  const unwrappedParams = use(params as unknown as Promise<{ id: string }>);
-  const interviewId = unwrappedParams.id;
+  const { id: interviewId } = use(params);
 
   const router = useRouter();
   const [interview, setInterview] = useState<Interview | null>(null);

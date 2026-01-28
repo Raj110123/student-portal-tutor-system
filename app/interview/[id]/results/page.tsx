@@ -12,15 +12,14 @@ import FeedbackTabData from "@/components/ResultsPage/FeedbackTabData";
 import InterviewNav from "@/components/interview/InterviewNav";
 
 interface ResultsPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function ResultsPage({ params }: ResultsPageProps) {
   // unwrap params using react.use()
-  const unwrappedParams = use(params as unknown as Promise<{ id: string }>);
-  const interviewId = unwrappedParams.id;
+  const { id: interviewId } = use(params);
 
   const router = useRouter();
   const [interview, setInterview] = useState<any>(null);

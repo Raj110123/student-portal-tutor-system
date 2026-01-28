@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // @ts-expect-error: eslint config is valid but types might be outdated
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -21,8 +22,8 @@ const nextConfig: NextConfig = {
       const externals = Array.isArray(config.externals)
         ? config.externals
         : config.externals
-        ? [config.externals]
-        : [];
+          ? [config.externals]
+          : [];
       externals.push("canvas");
       config.externals = externals;
     }

@@ -120,10 +120,10 @@ async function updateInterviewAnalysisInBackground(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     console.log("Received request for interview:", id);
 
     // connect to MongoDB
@@ -225,7 +225,7 @@ export async function POST(
     // STEP 1: Store answer immediately in MongoDB
     // Update the interview with the answer, candidateId (userId), and timestamp
     interview.questions[questionIndex].answer = answer;
-    
+
     // Save the answer immediately (before webhook call)
     await interview.save();
     console.log(

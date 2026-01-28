@@ -1,6 +1,6 @@
 # 🎙️ AI Powered Agentic Interview
 
-This is a smart, full-stack agentic ai interview platform designed to simulate real-life technical interviews. Leveraging Agentic AI, it generates role-specific questions, analyzes user responses, scores performance, and offers personalized feedback. All in one seamless experience with 2 agents and 2 sub-agents.
+This is a smart, full-stack Agentic AI interview platform designed to simulate real-life technical interviews. Leveraging Agentic AI, it generates role-specific questions, analyzes user responses, scores performance, and offers personalized feedback. All in one seamless experience with 2 agents and 2 sub-agents.
 ---
 
 ## 🚀 Features
@@ -35,10 +35,16 @@ This is a smart, full-stack agentic ai interview platform designed to simulate r
 - 🎯 **Question Analysis Page**  
   Review individual question analysis with scores, technical feedback, and improvement suggestions.
 
+- 📱 **Mobile-First Design**  
+  Fully responsive interface optimized for all devices, ensuring a seamless experience on mobile, tablet, and desktop.
+
+- 🌓 **Dark & Light Mode**  
+  Native theme support with system preference detection and manual toggle, featuring carefully crafted color palettes for both modes.
+
 - 🎨 **Mentor Dashboard**  
   A beautifully designed mentor interface with real-time feedback, performance metrics, and actionable insights.
 
--  **Research Page**  
+- 🔬 **Research Page**  
   Comprehensive research interface with advanced filtering and data visualization capabilities.
 
 ---
@@ -47,7 +53,7 @@ This is a smart, full-stack agentic ai interview platform designed to simulate r
 
 | Category       | Technology       |
 |----------------|------------------|
-| **Frontend**   | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4 |
+| **Frontend**   | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 |
 | **Backend**    | Next.js API Routes (Node.js runtime) |
 | **Database**   | MongoDB with Mongoose ODM |
 | **AI & NLP**   | Google Gemini API, N8N Agentic Workflows |
@@ -102,7 +108,7 @@ Notes:
 # install deps
 npm install
 
-# start dev server (http://localhost:3000)
+# start dev server (http://localhost:3030)
 npm run dev
 ```
 
@@ -263,7 +269,7 @@ The platform integrates with three n8n agentic workflows for enhanced AI capabil
 
 ## 🚀 Development Notes
 
-- Uses Next.js 15 with Turbopack for fast development
+- Uses Next.js 16 with Turbopack for fast development
 - React 19 with Server Components and Client Components
 - TypeScript for type safety
 - MongoDB connection pooling via Mongoose

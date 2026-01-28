@@ -69,19 +69,19 @@ const Dashboard = () => {
     : 0;
 
   return (
-    <div className="p-10 mx-auto max-w-7xl">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center justify-between w-full max-sm:flex-col max-sm:text-center">
-          <div>
-            <h1 className="text-3xl font-bold text-black dark:text-white sm:mb-2">
+    <div className="p-4 sm:p-6 md:p-10 mx-auto max-w-7xl safe-area-inset">
+      <div className="flex items-center justify-between mb-6 sm:mb-8">
+        <div className="flex items-center justify-between w-full flex-col sm:flex-row gap-4 sm:gap-0">
+          <div className="text-center sm:text-left">
+            <h1 className="text-2xl sm:text-3xl font-bold text-black dark:text-white mb-1 sm:mb-2">
               Your Interviews
             </h1>
-            <p className="text-black dark:text-gray-500 max-sm:text-sm">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-500">
               Practice your Interview Skills with AI Agents
             </p>
           </div>
 
-          <div className="max-sm:mt-4">
+          <div className="w-full sm:w-auto flex justify-center sm:block">
             <InterviewBtn
               onClick={handleCreateInterview}
               text="Create new Interview"
@@ -90,9 +90,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6"></h2>
+      <div className="mt-6 sm:mt-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6"></h2>
         <InterviewList />
       </div>
     </div>

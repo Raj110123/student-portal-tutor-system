@@ -18,21 +18,20 @@ const QuizAndAnswer = ({
 }: QuizAndAnswerProps) => {
   return (
     <div className="bg-gradient-to-r from-[#b87a9c]/20 to-[#d8a1bc]/10 rounded-xl backdrop-blur-sm border border-[#b87a9c]/30 shadow-lg overflow-hidden p-6">
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-2 sm:gap-0">
         <h2 className="text-xl font-bold">
           Question {activeQuestionIndex + 1}
         </h2>
 
         {activeQuestion.analysis && activeQuestion.answer && (
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-start sm:items-end w-full sm:w-auto">
             <div
-              className={`px-3 py-1 text-sm rounded-full font-medium ${
-                activeQuestion.analysis.score >= 80
+              className={`px-3 py-1 text-sm rounded-full font-medium ${activeQuestion.analysis.score >= 80
                   ? "bg-green-900/30 text-green-300"
                   : activeQuestion.analysis.score >= 60
-                  ? "bg-yellow-900/30 text-yellow-300"
-                  : "bg-red-900/30 text-red-300"
-              }`}
+                    ? "bg-yellow-900/30 text-yellow-300"
+                    : "bg-red-900/30 text-red-300"
+                }`}
             >
               Score: {activeQuestion.analysis.score}/100
             </div>

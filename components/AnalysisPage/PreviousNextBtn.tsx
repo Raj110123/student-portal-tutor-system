@@ -19,11 +19,10 @@ const PreviousNextBtn = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`px-4 py-2 rounded-md flex items-center ${
-        disabled
+      className={`px-4 py-3 min-h-[44px] rounded-md flex items-center justify-center touch-target ${disabled
           ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-          : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-      }`}
+          : "bg-blue-100 text-blue-700 hover:bg-blue-200 active:bg-blue-300"
+        }`}
     >
       {position === "mr-1" && (
         <svg

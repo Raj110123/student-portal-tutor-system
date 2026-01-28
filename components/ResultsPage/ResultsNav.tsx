@@ -16,10 +16,10 @@ const ResultsNav = ({
 }: ResultsNavProps) => {
   const router = useRouter();
   return (
-    <div className="flex items-center justify-between mb-6 max-sm:flex-col max-sm:gap-4">
-      <h1 className="text-3xl font-bold">Interview Results</h1>
+    <div className="flex items-center justify-between mb-6 max-sm:flex-col max-sm:gap-4 max-sm:text-center">
+      <h1 className="text-2xl sm:text-3xl font-bold">Interview Results</h1>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap justify-center">
         {/* print btn */}
         <ContinueBtn
           onClick={handlePrint}
@@ -47,7 +47,7 @@ const ResultsNav = ({
         {/* back to dashboard */}
         <MainButton
           color="blue"
-          text="Back to Dashbaord"
+          text="Dashboard"
           onClick={() => router.push(`/dashboard`)}
         />
       </div>

@@ -64,14 +64,14 @@ const UserProfile = () => {
         </div>
       </div>
       {open && (
-        <div className="text-gray-900 dark:text-white absolute mt-2 w-full z-10 bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-lg border border-gray-200 dark:border-zinc-800">
+        <div className="text-gray-900 dark:text-white absolute mt-2 w-full min-w-[200px] right-0 z-10 bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-lg border border-gray-200 dark:border-zinc-800">
           <ul className="py-1">
             <li
               onClick={() => {
                 router.push("/dashboard");
                 setOpen(false);
               }}
-              className={`border-b cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 p-3 rounded-t-lg border-gray-200 dark:border-zinc-800 ${pathname === "/dashboard" ? "bg-gray-200 dark:bg-zinc-800" : ""
+              className={`border-b cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 p-4 rounded-t-lg border-gray-200 dark:border-zinc-800 min-h-[48px] flex items-center ${pathname === "/dashboard" ? "bg-gray-200 dark:bg-zinc-800" : ""
                 }`}
             >
               Dashboard
@@ -81,7 +81,7 @@ const UserProfile = () => {
                 setOpen(false);
                 logout();
               }}
-              className="p-3 rounded-b-lg cursor-pointer font-semibold text-red-500 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors"
+              className="p-4 rounded-b-lg cursor-pointer font-semibold text-red-500 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors min-h-[48px] flex items-center"
             >
               Logout
             </li>

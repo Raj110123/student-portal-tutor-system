@@ -127,7 +127,7 @@ export default function AnalysisPage({ params }: AnalysisProps) {
         // SIMPLE COMPARISON: Check if ANY question's analysis has changed
         const currentQuestions = currentInterview.questions || [];
         const fetchedQuestions = fetchedInterview.questions || [];
-        
+
         let foundUpdate = false;
 
         for (let i = 0; i < Math.max(currentQuestions.length, fetchedQuestions.length); i++) {
@@ -228,7 +228,7 @@ export default function AnalysisPage({ params }: AnalysisProps) {
   return (
     <>
       <InterviewNav interview={interview} />
-      <div className="text-white container mx-auto py-6 px-1 max-w-[90%]">
+      <div className="text-white container mx-auto py-6 px-4 sm:px-6 max-w-7xl safe-area-inset">
         {/* heading and message */}
         <div className="flex max-sm:flex-col max-sm:gap-6 max-sm:text-center justify-between items-center mb-6">
           <div>

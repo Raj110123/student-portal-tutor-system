@@ -124,18 +124,18 @@ export default function MentorPage() {
 
   if (loading) {
     return (
-      <main className="px-6 py-12">
+      <main className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-center">
             <div className="relative">
-              <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <Brain className="w-8 h-8 text-purple-600" />
+                <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600" />
               </div>
             </div>
           </div>
-          <p className="text-center text-gray-900 dark:text-white mt-6 text-lg font-medium">Loading comprehensive mentor report...</p>
-          <p className="text-center text-purple-600 dark:text-purple-200 mt-2 text-sm">Analyzing your interview performance</p>
+          <p className="text-center text-gray-900 dark:text-white mt-4 sm:mt-6 text-base sm:text-lg font-medium">Loading comprehensive mentor report...</p>
+          <p className="text-center text-purple-600 dark:text-purple-200 mt-2 text-xs sm:text-sm">Analyzing your interview performance</p>
         </div>
       </main>
     );
@@ -143,12 +143,12 @@ export default function MentorPage() {
 
   if (error) {
     return (
-      <main className="px-6 py-12">
+      <main className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-red-500/10 border border-red-500/20 backdrop-blur-sm rounded-2xl p-8 text-center">
-            <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Connection Error</h2>
-            <p className="text-red-300">{error}</p>
+          <div className="bg-red-500/10 border border-red-500/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center">
+            <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-red-400 mx-auto mb-4" />
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">Connection Error</h2>
+            <p className="text-red-300 text-sm sm:text-base">{error}</p>
           </div>
         </div>
       </main>
@@ -156,23 +156,23 @@ export default function MentorPage() {
   }
 
   return (
-    <main className="px-6 py-12">
-      <div className="max-w-6xl mx-auto">
+    <main className="px-4 sm:px-6 py-8 sm:py-12 safe-area-inset">
+      <div className="max-w-6xl mx-auto max-sm:max-w-[90%]">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <div className="inline-flex items-center gap-3 bg-purple-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-3 mb-6">
-            <Brain className="w-6 h-6 text-purple-400" />
-            <span className="text-black dark:text-purple-300 font-medium">Mentor Agent Dashboard</span>
+        <div className="mb-8 sm:mb-12 text-center">
+          <div className="inline-flex items-center gap-2 sm:gap-3 bg-purple-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-4 sm:mb-6">
+            <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
+            <span className="text-black dark:text-purple-300 font-medium text-sm sm:text-base">Mentor Agent Dashboard</span>
           </div>
-          <h1 className="text-5xl font-bold mb-4 pb-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 pb-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Mentor Insights
           </h1>
-          <p className="text-xl text-black dark:text-purple-200 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-black dark:text-purple-200 max-w-2xl mx-auto px-4 sm:px-0">
             Personalized Feedback to help you master your Interview Skills!
           </p>
-          <div className="flex items-center justify-center gap-2 mt-6">
-            <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
-            <span className="text-sm text-black dark:text-purple-300">
+          <div className="flex items-center justify-center gap-2 mt-4 sm:mt-6">
+            <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
+            <span className="text-xs sm:text-sm text-black dark:text-purple-300">
               {isConnected ? 'Real-time updates active' : 'Connection lost'}
             </span>
           </div>

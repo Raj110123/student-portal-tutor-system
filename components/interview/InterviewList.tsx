@@ -152,9 +152,9 @@ export default function InterviewList() {
       )}
 
       {!error && interviews.length === 0 ? (
-        <div className="w-full h-[40vh] flex items-center justify-center">
-          <div className="text-center py-8 w-[40vw]  bg-[var(--input-bg)] rounded-lg">
-            <p className="mb-4 text-gray-400">
+        <div className="w-full min-h-[40vh] flex items-center justify-center px-4">
+          <div className="text-center py-6 sm:py-8 w-full max-w-md bg-[var(--input-bg)] rounded-lg">
+            <p className="mb-4 text-sm sm:text-base text-gray-400">
               No interviews found. Start a new interview to practice!
             </p>
           </div>
@@ -164,11 +164,11 @@ export default function InterviewList() {
           {interviews.map((interview) => (
             <div
               key={interview._id}
-              className="bg-[#171415] border border-[#352a31] max-w-[800px] max-sm:w-full rounded-xl shadow-md px-6 py-8"
+              className="bg-[#171415] border border-[#352a31] max-w-[800px] w-full sm:w-full mx-auto sm:mx-0 rounded-xl shadow-md px-4 sm:px-6 py-6 sm:py-8 max-sm:max-w-[90%]"
             >
               {/* // job role, status */}
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold uppercase max-sm:text-base text-white">
+              <div className="flex items-start sm:items-center justify-between mb-4 gap-2">
+                <h3 className="text-lg sm:text-xl font-bold uppercase text-white">
                   {interview.jobRole}
                 </h3>
                 {getStatusBadge(interview.status)}
@@ -236,7 +236,7 @@ export default function InterviewList() {
 
               {/* // buttons for continue, view results, view analysis, and start new interview */}
 
-              <div className="relative flex flex-wrap gap-4 mt-4">
+              <div className="relative flex flex-wrap gap-2 sm:gap-4 mt-4">
                 {interview.status === "in-progress" && (
                   <>
                     {/* continue btn */}

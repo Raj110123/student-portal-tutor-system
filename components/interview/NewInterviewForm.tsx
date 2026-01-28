@@ -146,14 +146,14 @@ const NewInterviewForm = ({
     <section className="flex w-[100%] h-screen">
       <form
         onSubmit={handleSubmit}
-        className="w-[50%] max-sm:w-full flex flex-col items-center justify-center"
+        className="w-[50%] max-sm:w-full flex flex-col items-center justify-center pt-8 sm:pt-0"
       >
-        <div className="flex flex-col items-center justify-center mt-10">
-          <h1 className="text-4xl font-semibold text-gray-900 dark:text-white">Welcome Buddy!</h1>
-          <p className="text-gray-600 dark:text-gray-300">Create your interview to start your journey!</p>
+        <div className="flex flex-col items-center justify-center mt-4 sm:mt-10 text-center">
+          <h1 className="text-2xl sm:text-4xl font-semibold text-gray-900 dark:text-white">Welcome Buddy!</h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-2">Create your interview to start your journey!</p>
         </div>
 
-        <div className="flex items-center rounded-xl flex-col gap-4 w-[55%] max-sm:w-full max-sm:px-8 p-4 min-h-[70%] mt-6">
+        <div className="flex items-center rounded-xl flex-col gap-4 w-[55%] max-sm:w-[95%] max-sm:px-4 p-4 min-h-[70%] mt-4 sm:mt-6">
           {/* job role input */}
           <InterviwFormInputs
             label="Job Role"
@@ -260,8 +260,8 @@ const NewInterviewForm = ({
               type="submit"
               disabled={isSubmitting}
               className={`px-4 w-full py-2 rounded-md shadow-sm text-sm font-medium cursor-pointer transition-all duration-300 text-white ${isSubmitting
-                  ? "bg-[#984CFF]"
-                  : "bg-[#984CFF] hover:bg-[#974cffba]"
+                ? "bg-[#984CFF]"
+                : "bg-[#984CFF] hover:bg-[#974cffba]"
                 }`}
             >
               {isSubmitting ? "Creating..." : "Start Interview"}

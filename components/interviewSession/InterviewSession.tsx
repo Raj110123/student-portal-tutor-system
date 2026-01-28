@@ -137,7 +137,7 @@ export default function InterviewSession({
         // Compare by creating a simple signature of analysis data
         const currentQuestions = currentInterview.questions || [];
         const fetchedQuestions = fetchedInterview.questions || [];
-        
+
         let foundUpdate = false;
 
         for (let i = 0; i < Math.max(currentQuestions.length, fetchedQuestions.length); i++) {
@@ -552,7 +552,7 @@ export default function InterviewSession({
           console.log("Error completing interview: ", completeError);
           setError(
             completeError.message ||
-              "Error completing interview. Please try again later"
+            "Error completing interview. Please try again later"
           );
         }
       }
@@ -565,21 +565,21 @@ export default function InterviewSession({
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6 text-white bg-[var(--input-bg)]/30 rounded-lg shadow-sm">
+    <div className="flex flex-col gap-4 sm:gap-6 p-4 sm:p-6 text-white bg-[var(--input-bg)]/30 rounded-lg shadow-sm">
       {/*previous, next btn question length  */}
 
-      <div className="flex items-center justify-between">
-        <div className="text-sm font-semibold text-gray-400">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+        <div className="text-xs sm:text-sm font-semibold text-gray-400">
           <div className="flex items-center gap-2">
             Question
-            <span className="bg-gradient-to-br from-[#b87a9c] to-[#d8a1bc] text-white font-bold rounded-full w-7 h-7 flex items-center justify-center text-xs shadow-lg shadow-[#b87a9c]/20">
+            <span className="bg-gradient-to-br from-[#b87a9c] to-[#d8a1bc] text-white font-bold rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-xs shadow-lg shadow-[#b87a9c]/20">
               {currentIndex + 1}
             </span>{" "}
             <span> of {interview.questions.length}</span>
           </div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <PrevNextBtn
             onClick={handlePreviousQuestion}
             disabled={currentIndex === 0 || isSubmitting}
@@ -606,22 +606,22 @@ export default function InterviewSession({
           style={{ width: `${progress}%` }}
         ></div>
       </div>
-      <div className="flex flex-col gap-6 lg:flex-row">
-        {/* web cam section */}
-        <div className="lg:w-1/3 bg-gradient-to-r from-[#b87a9c]/20 to-[#d8a1bc]/10 rounded-xl backdrop-blur-sm border border-[#b87a9c]/30 shadow-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-[#b87a9c]/20 to-transparent p-6">
-            <h1 className="flex items-center gap-2 text-xl font-semibold text-white">
-              <span className="h-5 w-1 bg-[#b87a9c] rounded-full"></span>
+      <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row">
+        {/* web cam section - hidden on very small screens, shown as collapsible on mobile */}
+        <div className="w-full lg:w-1/3 bg-gradient-to-r from-[#b87a9c]/20 to-[#d8a1bc]/10 rounded-xl backdrop-blur-sm border border-[#b87a9c]/30 shadow-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-[#b87a9c]/20 to-transparent p-4 sm:p-6">
+            <h1 className="flex items-center gap-2 text-lg sm:text-xl font-semibold text-white">
+              <span className="h-4 sm:h-5 w-1 bg-[#b87a9c] rounded-full"></span>
               Voice Response
             </h1>
           </div>
 
-          <div className="w-full p-6">
+          <div className="w-full p-4 sm:p-6">
             <div className="relative">
               <Webcam
                 audio={false}
                 ref={webcamRef}
-                className="rounded-lg w-full h-[200px] shadow-md bg-zinc-900"
+                className="rounded-lg w-full h-[150px] sm:h-[200px] shadow-md bg-zinc-900"
                 videoConstraints={{
                   width: 560,
                   height: 300,
@@ -629,15 +629,15 @@ export default function InterviewSession({
                 }}
               />
               {isRecording && (
-                <div className="absolute flex items-center px-2 py-1 text-xs text-white bg-red-500 rounded-full top-3 right-3">
+                <div className="absolute flex items-center px-2 py-1 text-xs text-white bg-red-500 rounded-full top-2 right-2 sm:top-3 sm:right-3">
                   <span className="inline-block w-2 h-2 mr-1 bg-white rounded-full animate-pulse"></span>
                   REC {formatTime(recordingTime)}
                 </div>
               )}
             </div>
             <div className="flex gap-2 mt-3">
-              <Mic className="w-5 text-[#b87a9c]" />
-              <span>Audio Input</span>
+              <Mic className="w-4 sm:w-5 text-[#b87a9c]" />
+              <span className="text-sm sm:text-base">Audio Input</span>
             </div>
 
             <RecordingBtn
@@ -650,19 +650,20 @@ export default function InterviewSession({
               isRecording={isRecording}
               disabled={isSubmitting}
             />
-            <div className="mt-3 text-sm text-center text-gray-500 dark:text-gray-400">
+            <div className="mt-3 text-xs sm:text-sm text-center text-gray-500 dark:text-gray-400">
               {isRecording
                 ? "Speak clearly into your microphone. Your speech will be transcribed automatically."
                 : "Click the button above to start recording your answer."}
             </div>
 
-            <div className="border-t mt-6 border-[#b87a9c]/30">
-              <h2 className="flex items-center gap-2 mt-7">
+            {/* Tips section - hidden on mobile for space, visible on larger screens */}
+            <div className="border-t mt-4 sm:mt-6 border-[#b87a9c]/30 hidden sm:block">
+              <h2 className="flex items-center gap-2 mt-4 sm:mt-7 text-sm sm:text-base">
                 <Lightbulb className="w-4 text-[#b87a9c]" />
                 Interview Tips:
               </h2>
 
-              <ul className="mt-4 space-y-3 text-xs text-slate-400">
+              <ul className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 text-xs text-slate-400">
                 <li className="flex items-center gap-2 bg-[#b87a9c]/10 p-2 rounded-md border border-[#b8a1bc]/30 hover:border-[#b87a9c]/30 transition-all">
                   <span className="bg-[#b87a9c]/20 text-[#d8a1bc] rounded-full p-1 mt-0.5">
                     <Zap className="w-3 h-3" />

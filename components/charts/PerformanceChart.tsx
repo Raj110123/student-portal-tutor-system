@@ -24,8 +24,8 @@ interface PerformanceChartProps {
 
 const PerformanceChart: React.FC<PerformanceChartProps> = ({ data }) => {
   return (
-    <div className="w-full h-80 bg-[#0d0d1a] border border-purple-500/30 rounded-2xl p-6 shadow-2xl">
-      <h3 className="text-xl font-bold text-white mb-4">Interview Performance Over Time</h3>
+    <div className="w-full h-80 sm:h-96 bg-[#0d0d1a] border border-purple-500/30 rounded-2xl p-4 sm:p-6 shadow-2xl">
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-4">Interview Performance Over Time</h3>
       <ResponsiveContainer width="100%" height="90%">
         <LineChart
           data={data}

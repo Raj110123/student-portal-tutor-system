@@ -109,17 +109,90 @@ body {
     @apply flex bg-[var(--input-bg)] w-full h-[64px] rounded-[8px] items-center justify-center gap-3 font-semibold border-2 border-gray-500 cursor-pointer hover:bg-transparent transition-all;
   }
 
-  /* Mobile-specific utilities */
-  .mobile-container {
-    @apply px-4 py-2 max-w-full mx-auto;
+  /* ===== MOBILE-FIRST RESPONSIVE UTILITIES ===== */
+
+  /* Touch-friendly button - minimum 44px height */
+  .touch-btn {
+    @apply min-h-[44px] min-w-[44px] px-4 py-2 flex items-center justify-center;
   }
 
+  .touch-btn-lg {
+    @apply min-h-[48px] min-w-[48px] px-5 py-3 flex items-center justify-center;
+  }
+
+  /* Mobile container with responsive padding */
+  .mobile-container {
+    @apply px-4 sm:px-6 md:px-8 lg:px-10 py-4 sm:py-6 max-w-full mx-auto;
+  }
+
+  /* Responsive text utilities */
   .mobile-text-responsive {
     @apply text-sm sm:text-base lg:text-lg;
   }
 
+  .mobile-heading {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+
+  .mobile-subheading {
+    @apply text-lg sm:text-xl md:text-2xl font-semibold;
+  }
+
+  /* Mobile-optimized button */
   .mobile-button {
-    @apply py-3 px-6 text-sm sm:py-4 sm:px-8 sm:text-base;
+    @apply py-3 px-6 text-sm sm:py-4 sm:px-8 sm:text-base min-h-[44px] active:scale-95 transition-transform;
+  }
+
+  /* Card with mobile-friendly padding */
+  .mobile-card {
+    @apply p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl;
+  }
+
+  /* Touch-friendly spacing between interactive elements */
+  .touch-spacing {
+    @apply gap-3 sm:gap-4;
+  }
+
+  /* Safe area padding for notched devices */
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Touch feedback - active state */
+  .touch-feedback {
+    @apply active:opacity-80 active:scale-[0.98] transition-all duration-150;
+  }
+
+  /* Mobile-optimized grid */
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+
+  /* Hide on mobile, show on larger screens */
+  .mobile-hide {
+    @apply hidden sm:block;
+  }
+
+  /* Show only on mobile */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+
+  /* Full width on mobile */
+  .mobile-full {
+    @apply w-full sm:w-auto;
+  }
+
+  /* Stack on mobile, row on larger screens */
+  .mobile-stack {
+    @apply flex flex-col sm:flex-row;
+  }
+
+  /* Center on mobile */
+  .mobile-center {
+    @apply text-center sm:text-left items-center sm:items-start;
   }
 }
 

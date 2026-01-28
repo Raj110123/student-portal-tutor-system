@@ -158,7 +158,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
   return (
     <>
       <InterviewNav interview={interview} />
-      <div className="text-white container mx-auto py-6 px-1 max-w-[90%]">
+      <div className="text-white container mx-auto py-6 px-4 sm:px-6 max-w-7xl safe-area-inset">
         {/* // results nav */}
         <ResultsNav
           interviewId={interviewId}

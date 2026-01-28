@@ -14,31 +14,29 @@ const QuestionList = ({
   return (
     <div className="md:col-span-1 bg-gradient-to-r from-[#b87a9c]/20 to-[#d8a1bc]/10 rounded-xl backdrop-blur-sm border border-[#b87a9c]/30 shadow-lg overflow-hidden p-4 h-fit">
       <h2 className="mb-3 text-lg font-semibold">Questions</h2>
-      <div className="space-y-2 max-h-[70vh] overflow-y-auto pr-2">
+      <div className="space-y-2 max-h-[250px] md:max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
         {interview.questions.map((question: any, index: number) => (
           <button
             key={index}
             onClick={() => onClick(index)}
-            className={`w-full text-left p-3 rounded-md transition-colors ${
-              !question.answer
+            className={`w-full text-left p-3 rounded-md transition-colors border border-transparent ${!question.answer
                 ? "opacity-50 cursor-not-allowed bg-pink-300/10"
                 : activeQuestionIndex === index
-                ? "bg-[var(--theme-color)]/30 text-zinc-300"
-                : "hover:bg-pink-300/30"
-            }`}
+                  ? "bg-[var(--theme-color)]/30 text-zinc-300 border-[var(--theme-color)]/50"
+                  : "hover:bg-pink-300/30 active:bg-pink-300/40"
+              }`}
           >
             <div className="flex items-center justify-between">
               <span className="font-medium">Q{index + 1}</span>
 
               {question.analysis && question.answer && (
                 <span
-                  className={`px-2 py-0.5 text-xs rounded-full ${
-                    question.analysis.score >= 80
+                  className={`px-2 py-0.5 text-xs rounded-full ${question.analysis.score >= 80
                       ? "bg-green-900/30 text-green-300"
                       : question.analysis.score >= 60
-                      ? "bg-yellow-900/30 text-yellow-300"
-                      : "bg-red-900/30 text-red-300"
-                  }`}
+                        ? "bg-yellow-900/30 text-yellow-300"
+                        : "bg-red-900/30 text-red-300"
+                    }`}
                 >
                   {question.analysis.score}
                 </span>

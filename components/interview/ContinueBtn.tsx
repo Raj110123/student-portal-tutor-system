@@ -18,6 +18,7 @@ const ContinueBtn = ({ onClick, text, path_1, path_2, color }: ContinueBtn) => {
   return (
     <button
       onClick={onClick}
+      aria-label={text}
       className={`px-4 py-2 transition-all cursor-pointer text-sm rounded-md shadow-sm ${colorClasses[color]} flex items-center justify-center min-h-[36px]`}
     >
       <svg

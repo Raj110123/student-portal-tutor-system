@@ -90,7 +90,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="mt-6 sm:mt-8">
+      <div className="mt-6 sm:mt-8 animate-slide-up">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6"></h2>
         <InterviewList />
       </div>

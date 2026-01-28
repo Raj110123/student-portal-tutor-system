@@ -41,6 +41,16 @@ const StatsChart: React.FC<StatsChartProps> = ({ data }) => {
   const jobRoles = data?.jobRoles || [];
   const techStacks = data?.techStacks || [];
 
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full h-[300px]" />;
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
       {/* Job Roles Chart */}

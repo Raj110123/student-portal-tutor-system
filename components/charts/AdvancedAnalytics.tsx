@@ -40,6 +40,16 @@ const AdvancedAnalytics: React.FC<AdvancedAnalyticsProps> = ({ performanceData, 
     { subject: 'Coding', A: 88, fullMark: 100 },
   ];
 
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full h-[300px]" />;
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
       {/* Cumulative Performance Chart */}

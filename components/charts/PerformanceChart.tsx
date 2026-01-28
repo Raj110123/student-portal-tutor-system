@@ -23,6 +23,15 @@ interface PerformanceChartProps {
 }
 
 const PerformanceChart: React.FC<PerformanceChartProps> = ({ data }) => {
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div className="w-full h-80 sm:h-96 bg-[#0d0d1a] border border-purple-500/30 rounded-2xl p-4 sm:p-6 shadow-2xl" />;
+  }
   return (
     <div className="w-full h-80 sm:h-96 bg-[#0d0d1a] border border-purple-500/30 rounded-2xl p-4 sm:p-6 shadow-2xl">
       <h3 className="text-lg sm:text-xl font-bold text-white mb-4">Interview Performance Over Time</h3>

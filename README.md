@@ -76,7 +76,6 @@ Create a `.env.local` in the project root with:
 ```
 JWT_SECRET=your_strong_secret
 MONGODB_URI=your_mongodb_connection_string
-GEMINI_API_KEY=your_gemini_api_key
 
 # ImageKit Integration (For resume uploads)
 IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
@@ -125,13 +124,6 @@ npm run dev
   - Client popup sign-in via Firebase Auth (`lib/firebaseClient.ts`)
   - Exchange Firebase ID token at `POST /api/auth/google` to get an app JWT
   - Server-side verification via Firebase Admin (`lib/firebaseAdmin.ts`)
-
-## 🚀 Deployment (Render)
-
-- Use Node.js LTS. This project pins Node in `package.json` via `engines.node`.
-- Set the same environment variables in Render dashboard (do not rely on `.env.local`).
-- In Firebase Console add your Render domain to:
-  - Authentication -> Settings -> Authorized domains
 
 ## 🤖 AI Features
 
@@ -221,51 +213,6 @@ The platform integrates with three n8n agentic workflows for enhanced AI capabil
    - Generates detailed critique of question quality and interviewer performance
    - Stores review in `mentorAgentReviews` array with comprehensive feedback fields
    - Provides actionable advice for improving future interview sessions
-
-## 📊 Database Schema
-
-### User Model
-- **name** (String, required)
-- **email** (String, required, unique)
-- **password** (String, required, minLength: 8)
-- **createdAt** (Date, auto)
-- **updatedAt** (Date, auto)
-
-### Interview Model
-- **user** (ObjectId, ref: 'User', required)
-- **jobRole** (String, required)
-- **techStack** ([String], required)
-- **yearsOfExperience** (Number, required)
-- **resumeText** (String, default: "")
-- **resumeUrl** (String, default: "")
-- **questions** (Array of Question objects)
-  - **text** (String, required)
-  - **answer** (String, default: "")
-  - **analysis** (Object)
-    - **score** (Number, default: 0)
-    - **technicalFeedback** (String)
-    - **communicationFeedback** (String)
-    - **improvementSuggestions** ([String])
-- **workflowQuestions** (Mixed, default: null)
-- **overallScore** (Number, default: 0)
-- **feedback** (Object)
-  - **overallFeedback** (String)
-  - **strengths** ([String])
-  - **areasForImprovement** ([String])
-  - **nextSteps** ([String])
-- **status** (String, enum: ["pending", "in-progress", "completed"], default: "pending")
-- **completedAt** (Date, default: null)
-- **result** (String, default: null)
-- **mentorAgentReviews** (Array of Review objects)
-  - **overallCritique** (String)
-  - **questionQualityIssues** (String)
-  - **missedOpportunities** (String)
-  - **recommendedImprovedQuestions** (String)
-  - **actionableAdviceForInterviewerAgent** (String)
-  - **createdAt** (Date, default: now)
-- **usedFallbackQuestions** (Boolean, default: false)
-- **createdAt** (Date, auto)
-- **updatedAt** (Date, auto)
 
 ## 🚀 Development Notes
 

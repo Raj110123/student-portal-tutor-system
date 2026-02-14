@@ -95,6 +95,10 @@ const interviewSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    mentorReviewUsed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

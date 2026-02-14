@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import { CheckCircle2, TrendingUp, AlertCircle, Lightbulb, Target, Clock, Award, MessageSquare, Star, Zap, Shield, Brain } from 'lucide-react';
+import { CheckCircle2, TrendingUp, AlertCircle, Lightbulb, Target, Clock, Award, MessageSquare, Star, Shield, Brain } from 'lucide-react';
 
 interface ComprehensiveMentorReport {
   lastUpdated: string;
   totalReviews: number;
   latestInterviewRole: string;
-  latestInterviewDate: string;
   overallCritique: string;
   questionQualityIssues: string;
   missedOpportunities: string;
@@ -238,7 +237,7 @@ export default function MentorPage() {
               <div className="bg-[#1a1a2e] border border-green-500/30 rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <Clock className="w-8 h-8 text-green-400" />
-                  <span className="text-xl font-bold text-white">{new Date(report.lastUpdated).toLocaleDateString()}</span>
+                  <span className="text-xl font-bold text-white">{new Date(report.lastUpdated).toLocaleDateString('en-GB')}</span>
                 </div>
                 <p className="text-green-200 font-medium">Last Updated</p>
                 <p className="text-green-300 text-sm mt-1">Latest feedback</p>
@@ -257,16 +256,8 @@ export default function MentorPage() {
                     <p className="text-purple-300">{report.latestInterviewRole} Interview</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-purple-300">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span>{new Date(report.latestInterviewDate).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4" />
-                    <span>AI-Powered Insights</span>
-                  </div>
-                </div>
+
+
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

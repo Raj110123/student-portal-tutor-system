@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import Loader from "../Loader";
 import ContinueBtn from "./ContinueBtn";
@@ -12,6 +13,7 @@ interface Interview {
   status: string;
   overallScore: number;
   createdAt: string;
+  mentorReviewUsed?: boolean;
 }
 
 export default function InterviewList() {
@@ -19,6 +21,11 @@ export default function InterviewList() {
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mentorLoadingId, setMentorLoadingId] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+  // Find the latest completed interview (list is sorted createdAt desc)
+  const latestCompletedId = interviews.find((i) => i.status === "completed")?._id || null;
 
   useEffect(() => {
     const fetchInterviews = async () => {
@@ -56,6 +63,14 @@ export default function InterviewList() {
 
     fetchInterviews();
   }, []);
+
+  // Auto-dismiss toast
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -120,22 +135,44 @@ export default function InterviewList() {
       router.push("/login");
       return;
     }
+
+    setMentorLoadingId(id);
+    setToast(null);
+
     try {
       const res = await fetch(`/api/interview/${id}/mentor`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) {
-        throw new Error("Failed to trigger mentor review");
+        const data = await res.json().catch(() => ({}));
+        if (data.reason === "already_used") {
+          setToast({ message: "Mentor review has already been used for this interview.", type: "error" });
+          // Mark locally so button stays disabled
+          setInterviews((prev) =>
+            prev.map((i) => (i._id === id ? { ...i, mentorReviewUsed: true } : i))
+          );
+        } else if (data.reason === "not_latest") {
+          setToast({ message: "Mentor review is only available for your latest interview.", type: "error" });
+        } else {
+          setToast({ message: data.reason || "Mentor review failed. Please try again.", type: "error" });
+        }
+        return;
       }
       const data = await res.json();
       if (data.success) {
-        alert("Mentor review triggered successfully!");
+        setToast({ message: "Mentor review agent triggered successfully!", type: "success" });
+        // Mark as used locally so button disables immediately
+        setInterviews((prev) =>
+          prev.map((i) => (i._id === id ? { ...i, mentorReviewUsed: true } : i))
+        );
       } else {
-        alert(`Mentor review failed: ${data.reason || 'Unknown error'}`);
+        setToast({ message: `Mentor review failed: ${data.reason || "Unknown error"}`, type: "error" });
       }
     } catch (e) {
-      setError("Failed to trigger mentor review. Please try again.");
+      setToast({ message: "Failed to trigger mentor review. Please try again.", type: "error" });
+    } finally {
+      setMentorLoadingId(null);
     }
   };
 
@@ -145,6 +182,37 @@ export default function InterviewList() {
 
   return (
     <div className="space-y-6 text-gray-900 dark:text-white">
+      {/* Toast notification — rendered via portal directly on body, right below navbar */}
+      {toast && createPortal(
+        <div
+          style={{ position: 'fixed', top: '100px', left: 0, right: 0, zIndex: 9999, display: 'flex', justifyContent: 'center', padding: '0 16px' }}
+        >
+          <div
+            className={`px-6 py-4 rounded-xl shadow-2xl text-sm font-medium max-w-lg w-full ${toast.type === "success"
+              ? "bg-emerald-900/95 border border-emerald-500/40 text-emerald-200"
+              : "bg-red-900/95 border border-red-500/40 text-red-200"
+              }`}
+          >
+            <div className="flex items-center gap-3">
+              {toast.type === "success" ? (
+                <svg className="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              )}
+              <span>{toast.message}</span>
+              <button onClick={() => setToast(null)} className="ml-auto text-gray-400 hover:text-white">
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
       {error && (
         <div className="px-4 py-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
           {error}
@@ -161,149 +229,158 @@ export default function InterviewList() {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-1 xl:grid-cols-2">
-          {interviews.map((interview) => (
-            <div
-              key={interview._id}
-              className="bg-[#171415] border border-[#352a31] max-w-[800px] w-full sm:w-full mx-auto sm:mx-0 rounded-xl shadow-md px-4 sm:px-6 py-6 sm:py-8 max-sm:max-w-[90%]"
-            >
-              {/* // job role, status */}
-              <div className="flex items-start sm:items-center justify-between mb-4 gap-2">
-                <h3 className="text-lg sm:text-xl font-bold uppercase text-white">
-                  {interview.jobRole}
-                </h3>
-                {getStatusBadge(interview.status)}
-              </div>
+          {interviews.map((interview) => {
+            const isLatestCompleted = interview._id === latestCompletedId;
+            const mentorDisabled =
+              !isLatestCompleted || interview.mentorReviewUsed === true;
+            const isMentorLoading = mentorLoadingId === interview._id;
 
-              {/* // experience, progress and score */}
-              <div className="flex flex-col gap-2 mb-4 font-medium text-gray-400 text-md">
-                <div className="flex gap-20 max-sm:gap-10">
-                  <div className="">
-                    <p>Experience</p>
-                    <p className="text-gray-200">
-                      {interview.yearsOfExperience}{" "}
-                      {interview.yearsOfExperience <= 1 ? "Year" : "Years"}
-                    </p>
-                  </div>
-                  <div>
-                    <p>Date</p>
-                    <p className="text-gray-200">
-                      {new Date(interview.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div>
-                    {interview.status === "in-progress" && (
-                      <div>
-                        <p>Score</p>
-                        <p className="text-2xl font-bold">
-                          {" "}
-                          <span
-                            className={
-                              interview.overallScore >= 70
-                                ? "text-green-500"
-                                : interview.overallScore >= 50
-                                  ? "text-yellow-500"
-                                  : "text-red-500"
-                            }
-                          >
-                            {interview.overallScore}
-                          </span>{" "}
-                        </p>
-                      </div>
-                    )}
+            return (
+              <div
+                key={interview._id}
+                className="bg-[#171415] border border-[#352a31] max-w-[800px] w-full sm:w-full mx-auto sm:mx-0 rounded-xl shadow-md px-4 sm:px-6 py-6 sm:py-8 max-sm:max-w-[90%]"
+              >
+                {/* // job role, status */}
+                <div className="flex items-start sm:items-center justify-between mb-4 gap-2">
+                  <h3 className="text-lg sm:text-xl font-bold uppercase text-white">
+                    {interview.jobRole}
+                  </h3>
+                  {getStatusBadge(interview.status)}
+                </div>
 
-                    {interview.status === "completed" && (
-                      <div>
-                        <p>Score</p>
-                        <p className="text-2xl font-bold">
-                          {" "}
-                          <span
-                            className={
-                              interview.overallScore >= 70
-                                ? "text-green-500"
-                                : interview.overallScore >= 50
-                                  ? "text-yellow-500"
-                                  : "text-red-500"
-                            }
-                          >
-                            {interview.overallScore}
-                          </span>{" "}
-                        </p>
-                      </div>
-                    )}
+                {/* // experience, progress and score */}
+                <div className="flex flex-col gap-2 mb-4 font-medium text-gray-400 text-md">
+                  <div className="flex gap-20 max-sm:gap-10">
+                    <div className="">
+                      <p>Experience</p>
+                      <p className="text-gray-200">
+                        {interview.yearsOfExperience}{" "}
+                        {interview.yearsOfExperience <= 1 ? "Year" : "Years"}
+                      </p>
+                    </div>
+                    <div>
+                      <p>Date</p>
+                      <p className="text-gray-200">
+                        {new Date(interview.createdAt).toLocaleDateString('en-GB')}
+                      </p>
+                    </div>
+                    <div>
+                      {interview.status === "in-progress" && (
+                        <div>
+                          <p>Score</p>
+                          <p className="text-2xl font-bold">
+                            {" "}
+                            <span
+                              className={
+                                interview.overallScore >= 70
+                                  ? "text-green-500"
+                                  : interview.overallScore >= 50
+                                    ? "text-yellow-500"
+                                    : "text-red-500"
+                              }
+                            >
+                              {interview.overallScore}
+                            </span>{" "}
+                          </p>
+                        </div>
+                      )}
+
+                      {interview.status === "completed" && (
+                        <div>
+                          <p>Score</p>
+                          <p className="text-2xl font-bold">
+                            {" "}
+                            <span
+                              className={
+                                interview.overallScore >= 70
+                                  ? "text-green-500"
+                                  : interview.overallScore >= 50
+                                    ? "text-yellow-500"
+                                    : "text-red-500"
+                              }
+                            >
+                              {interview.overallScore}
+                            </span>{" "}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
+
+                {/* // buttons for continue, view results, view analysis, and start new interview */}
+
+                <div className="relative flex flex-wrap gap-2 sm:gap-4 mt-4">
+                  {interview.status === "in-progress" && (
+                    <>
+                      {/* continue btn */}
+                      <ContinueBtn
+                        color="blue"
+                        text="Continue"
+                        path_1="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                        path_2="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        onClick={() => handleContinueInterview(interview._id)}
+                      />
+                      {/* analysis btn */}
+                      <ContinueBtn
+                        color="indigo"
+                        path_2=""
+                        text="Analysis"
+                        path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                        onClick={() => handleViewAnalysis(interview._id)}
+                      />
+                      <ContinueBtn
+                        color="indigo"
+                        text="Delete"
+                        path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                        path_2=""
+                        onClick={() => handleDeleteInterview(interview._id)}
+                      />
+                    </>
+                  )}
+
+                  {interview.status === "completed" && (
+                    <>
+                      {/* result btn */}
+                      <ContinueBtn
+                        color="green"
+                        text="Results"
+                        path_1="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                        path_2=""
+                        onClick={() => handleViewResults(interview._id)}
+                      />
+                      {/* analysis btn */}
+                      <ContinueBtn
+                        color="indigo"
+                        path_2=""
+                        text="Analysis"
+                        path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                        onClick={() => handleViewAnalysis(interview._id)}
+                      />
+                      {/* mentor review btn */}
+                      <ContinueBtn
+                        color="yellow"
+                        text="Mentor Review"
+                        path_1="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                        path_2=""
+                        onClick={() => handleMentorReview(interview._id)}
+                        disabled={mentorDisabled}
+                        loading={isMentorLoading}
+                      />
+                      {/* delete btn */}
+                      <ContinueBtn
+                        color="indigo"
+                        text="Delete"
+                        path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                        path_2=""
+                        onClick={() => handleDeleteInterview(interview._id)}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
-
-              {/* // buttons for continue, view results, view analysis, and start new interview */}
-
-              <div className="relative flex flex-wrap gap-2 sm:gap-4 mt-4">
-                {interview.status === "in-progress" && (
-                  <>
-                    {/* continue btn */}
-                    <ContinueBtn
-                      color="blue"
-                      text="Continue"
-                      path_1="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                      path_2="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      onClick={() => handleContinueInterview(interview._id)}
-                    />
-                    {/* analysis btn */}
-                    <ContinueBtn
-                      color="indigo"
-                      path_2=""
-                      text="Analysis"
-                      path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                      onClick={() => handleViewAnalysis(interview._id)}
-                    />
-                    <ContinueBtn
-                      color="indigo"
-                      text="Delete"
-                      path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                      path_2=""
-                      onClick={() => handleDeleteInterview(interview._id)}
-                    />
-                  </>
-                )}
-
-                {interview.status === "completed" && (
-                  <>
-                    {/* result btn */}
-                    <ContinueBtn
-                      color="green"
-                      text="Results"
-                      path_1="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                      path_2=""
-                      onClick={() => handleViewResults(interview._id)}
-                    />
-                    {/* analysis btn */}
-                    <ContinueBtn
-                      color="indigo"
-                      path_2=""
-                      text="Analysis"
-                      path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                      onClick={() => handleViewAnalysis(interview._id)}
-                    />
-                    {/* mentor review btn */}
-                    <ContinueBtn
-                      color="yellow"
-                      text="Mentor Review"
-                      path_1="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      path_2=""
-                      onClick={() => handleMentorReview(interview._id)}
-                    />
-                    {/* delete btn */}
-                    <ContinueBtn
-                      color="indigo"
-                      text="Delete"
-                      path_1="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                      path_2=""
-                      onClick={() => handleDeleteInterview(interview._id)}
-                    />
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

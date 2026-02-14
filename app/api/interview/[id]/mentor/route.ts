@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import Interview from "@/models/Interview";
 import { getUserIdFromToken } from "@/lib/auth";
 import { sendToN8nMentor } from "@/lib/n8nmentoragent";
+import mongoose from "mongoose";
 
 export async function POST(
   req: Request,
@@ -42,12 +43,51 @@ export async function POST(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
+    // Rate limit check 1: already used
+    if (interview.mentorReviewUsed) {
+      return NextResponse.json(
+        {
+          message: "Mentor review already used for this interview",
+          success: false,
+          reason: "already_used",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Rate limit check 2: must be the user's latest completed interview
+    const latestCompleted = await Interview.findOne({
+      user: userId,
+      status: "completed",
+    }).sort({ createdAt: -1 });
+
+    if (
+      !latestCompleted ||
+      latestCompleted._id.toString() !== interviewId
+    ) {
+      return NextResponse.json(
+        {
+          message: "Mentor review is only available for your latest completed interview",
+          success: false,
+          reason: "not_latest",
+        },
+        { status: 400 }
+      );
+    }
+
     // Send to n8n mentor webhook
     try {
       console.log("Interview data:", JSON.stringify(interview, null, 2));
       const mentorResult = await sendToN8nMentor(interview.toObject(), token);
       if (mentorResult.sent) {
         console.log("Successfully sent interview to n8n mentor webhook");
+
+        // Mark as used — use native MongoDB to bypass Mongoose strict mode / model caching
+        await mongoose.connection.collection('interviews').updateOne(
+          { _id: new mongoose.Types.ObjectId(String(interview._id)) },
+          { $set: { mentorReviewUsed: true } }
+        );
+
         return NextResponse.json(
           {
             message: "Mentor review triggered successfully",
@@ -68,6 +108,12 @@ export async function POST(
 
           const retryResult = await sendToN8nMentor(interview.toObject(), token);
           if (retryResult.sent) {
+            // Mark as used after successful retry — native MongoDB
+            await mongoose.connection.collection('interviews').updateOne(
+              { _id: new mongoose.Types.ObjectId(String(interview._id)) },
+              { $set: { mentorReviewUsed: true } }
+            );
+
             return NextResponse.json(
               {
                 message: "Mentor review triggered successfully after setting result",

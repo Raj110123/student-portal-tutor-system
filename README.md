@@ -1,229 +1,91 @@
-# 🎙️ AI Powered Agentic Interview
+# 🎓 Edumentor AI
 
-This is a smart, full-stack Agentic AI interview platform designed to simulate real-life technical interviews. Leveraging Agentic AI, it generates role-specific questions, analyzes user responses, scores performance, and offers personalized feedback. All in one seamless experience with 2 agents and 2 sub-agents.
+Edumentor AI is a curriculum-governed, closed-loop academic assistant for universities that reasons only from faculty-approved material, tracks concept mastery, detects misconceptions, enforces academic integrity, and provides explainable teacher insights.
+**Team:** Tech-Bytes
+**College:** Dwarkadas J. Sanghvi College of Engineering
+
 ---
 
 ## 🚀 Features
 
-- 🧠 **AI-Generated Questions**  
-  Get tailored interview questions based on your job role and the Resume Details you enter.
-
-- 🎤 **Voice-Based Interviewing**  
-  Use your mic to respond — the AI converts speech to text and evaluates your answers.
-
-- ✍️ **Editable Transcripts**  
-  Fix any misinterpretations from the mic input before submitting for analysis.
-
-- 📊 **Smart Scoring System**  
-  Your responses are scored on relevance, clarity, and depth.
-
-- 💡 **Personalized Feedback**  
-  Get improvement tips for each answer and your overall performance.
-
-- 📄 **PDF Resume Upload & Parsing**  
-  Upload your resume as PDF and the system automatically extracts skills, experience, projects, and education.
-
-- 📈 **Test History & Dashboard**  
-  Track your past interviews, scores, and feedback — all in one place.
-
-- 🔍 **Real-time Analysis Updates**  
-  Get instant feedback as you answer questions with automatic polling for analysis results.
-
-- 📊 **Detailed Results Page**  
-  View comprehensive results with Overview and Detailed Feedback tabs, including print and share functionality.
-
-- 🎯 **Question Analysis Page**  
-  Review individual question analysis with scores, technical feedback, and improvement suggestions.
-
-- 📱 **Mobile-First Design**  
-  Fully responsive interface optimized for all devices, ensuring a seamless experience on mobile, tablet, and desktop.
-
-- 🌓 **Dark & Light Mode**  
-  Native theme support with system preference detection and manual toggle, featuring carefully crafted color palettes for both modes.
-
-- 🎨 **Mentor Dashboard**  
-  A beautifully designed mentor interface with real-time feedback, performance metrics, and actionable insights.
-
-- 🔬 **Research Page**  
-  Comprehensive research interface with advanced filtering and data visualization capabilities.
+* **Curriculum-Bound Reasoning** — AI constrained to faculty-approved knowledge graphs and course artifacts.
+* **Concept Mastery Tracking** — Per-student concept heatmaps, Bloom’s taxonomy mapping, mastery timelines.
+* **Misconception Detection & Remediation** — Identify wrong mental models and deliver targeted remediation.
+* **Multimodal Adaptive Learning** — Speech-first interaction, text + visual summaries, accessibility adaptations.
+* **Academic Integrity Controls** — Question rotation, leakage/anomaly detection, audit trails.
+* **Teacher Dashboard & Insights** — Explainable analytics: class trends, misconception clusters, remediation recommendations.
+* **Closed-Loop Cycle** — Query → Concept ID → Mastery & Gap Analysis → Adaptive Explanation → Remediation → Faculty Insight Update.
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 Problem
 
-| Category       | Technology       |
-|----------------|------------------|
-| **Frontend**   | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 |
-| **Backend**    | Next.js API Routes (Node.js runtime) |
-| **Database**   | MongoDB with Mongoose ODM |
-| **AI & NLP**   | Google Gemini API, N8N Agentic Workflows |
-| **Voice Input**| Web Speech API (Browser) |
-| **File Processing** | PDF.js (pdfjs-dist), pdf-parse |
-| **Storage**    | ImageKit (for resume uploads) |
-| **Authentication** | JWT (jose) + Google Sign-In (Firebase Auth) |
-| **UI/UX** | Tailwind CSS, Lucide Icons, Glassmorphism Effects, next-themes (theme support) |
+Universities currently depend on unregulated AI and static LMSs, causing:
+
+* Knowledge leakage and hallucinations from generic models
+* Surface learning due to no concept-level tracking
+* Repeated failures from missing prerequisite analysis
+* Unequal learning without accessibility adaptation
+* Reactive (not proactive) faculty intervention
+
+Universities need a mission-critical assistant that enforces curriculum boundaries, measures mastery, detects misconceptions, and gives actionable, explainable insights to educators.
+
 ---
 
-## 📦 Requirements
+## 💡 Solution
 
-- Node.js 18.18+ (20+ recommended)
-- MongoDB (local service or MongoDB Atlas)
+Edumentor AI provides a closed-loop academic intelligence system comprised of:
 
-## 🔐 Environment Variables
+1. **Curriculum Engine**
 
-Create a `.env.local` in the project root with:
+   * Faculty-approved knowledge graph, course artifact mapping, prerequisite dependency graph.
 
+2. **Mastery & Misconception Engine**
+
+   * Concept-level mastery scoring, Bloom’s taxonomy alignment, targeted remediation plans.
+
+3. **Multimodal Renderer**
+
+   * Dynamic explanations with TTS, structured visual summaries, and accessibility options.
+
+4. **Integrity & Analytics**
+
+   * Leakage detection, question rotation, audit logs, student & class analytics dashboards.
+
+---
+
+## 🏗️ System Architecture (overview)
+
+* Knowledge Graph + Prerequisite Dependency Layer
+* Retrieval + Curriculum Constrained LLM Adapter
+* Mastery Engine & Remediation Planner
+* Multimodal Explanation Renderer (Speech, Text, Visual)
+* Teacher Dashboard, Integrity Module, and Analytics Store
+
+[*(Prototype/Demo)*](https://www.youtube.com/watch?v=9QwfX62UR9I)
+
+---
+
+## 📈 Market Opportunity
+
+Aligned with NEP and targeted at 40M+ higher-education students in India — addresses rising AI adoption, growing need for adaptive learning, and academic integrity concerns.
+
+---
+
+## 🛠️ Quick Tech Notes
+
+**Suggested prototype stack**
+
+```text
+Frontend: Next.js + React (mobile-first)
+Backend: Node.js / Python microservices
+Knowledge Graph: Neo4j or graph DB
+Models: Curriculum-constrained LLM + retrieval layer
+Auth/Infra: JWT, cloud DB, CDN for assets
 ```
-JWT_SECRET=your_strong_secret
-MONGODB_URI=your_mongodb_connection_string
 
-# ImageKit Integration (For resume uploads)
-IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
-IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
-IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
-IMAGEKIT_FOLDER=your_imagekit_folder
+---
 
-# Firebase (Google Sign-In)
-NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+## 📬 Contact
 
-# Firebase Admin (server-side verification for /api/auth/google)
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_CLIENT_EMAIL=your_service_account_client_email
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-```
-
-Notes:
-- `MONGODB_URI` can be local (e.g., `mongodb://127.0.0.1:27017`) or Atlas.
-
-## ▶️ Run locally
-
-```bash
-# install deps
-npm install
-
-# start dev server (http://localhost:3030)
-npm run dev
-```
-
-## 🧪 Scripts
-
-- `npm run dev` — start Next.js dev server (Turbopack)
-- `npm run build` — production build
-- `npm start` — start production server
-
-## 🔐 Auth & Data
-
-- MongoDB connection configured in `lib/mongodb.ts` (db name: `interview-ai`).
-- Google Sign-In flow:
-  - Client popup sign-in via Firebase Auth (`lib/firebaseClient.ts`)
-  - Exchange Firebase ID token at `POST /api/auth/google` to get an app JWT
-  - Server-side verification via Firebase Admin (`lib/firebaseAdmin.ts`)
-
-## 🤖 AI Features
-
-- **Question Generation**: AI-powered interview questions via n8n agentic workflows
-- **Response Analysis**: Real-time analysis of individual Q&A pairs via n8n analyzer webhook
-- **Interview Feedback**: Comprehensive feedback generation via n8n feedback webhook
-- **Mentor Feedback System**: Real-time feedback and analysis with visual metrics and improvement suggestions.
-
-### n8n Agentic Workflow Integration
-
-The platform integrates with three n8n agentic workflows for enhanced AI capabilities:
-
-#### 1. Question Generation Workflow
-- **Purpose**: Generates role-specific interview questions based on job description and resume
-- **Location**: `app/api/interview/route.ts`
-- **Payload**: Job role, years of experience, job description, resume details, tech stack
-- **Response**: Array of interview questions
-
-#### 2. Q&A Analyzer Workflow
-- **Purpose**: Analyzes individual question-answer pairs in real-time
-- **Location**: `lib/n8nAnalyzer.ts`
-- **Usage**: Called asynchronously when answers are submitted (non-blocking)
-- **Response**:
-  ```json
-  {
-    "score": 0-100,
-    "technicalFeedback": "string",
-    "communicationFeedback": "string",
-    "improvementSuggestions": ["string"]
-  }
-  ```
-- **Features**:
-  - Asynchronous processing (fire-and-forget)
-  - Automatic database updates when analysis completes
-  - 20-second timeout
-  - Handles nested response structures
-
-#### 3. Interview Feedback Workflow
-- **Purpose**: Generates comprehensive overall interview feedback after completion
-- **Location**: `lib/n8nInterviewFeedback.ts`
-- **Response**:
-  ```json
-  {
-    "overallFeedback": "string",
-    "strengths": ["string"],
-    "areasForImprovement": ["string"],
-    "nextSteps": ["string"]
-  }
-  ```
-
-#### 4. Mentor Agent Review Workflow
-- **Purpose**: Provides detailed critique of interviewer performance and question quality
-- **Location**: `app/api/interview/[id]/mentor`
-- **Response**:
-  ```json
-  {
-  "overallCritique": "string",
-  "questionQualityIssues": "string",
-  "missedOpportunities": "string",
-  "recommendedImprovedQuestions": "string",
-  "actionableAdviceForInterviewerAgent": "string"
-  }
-  ```
-
-### Workflow Trigger Points
-
-1. **Question Generation**: Triggered when creating a new interview (`POST /api/interview`)
-   - Sends job role, years of experience, job description, tech stack, and resume data
-   - Returns array of interview questions
-   - Falls back to Gemini if n8n fails
-   - Stores questions in `workflowQuestions` field if using n8n, otherwise generates locally
-
-2. **Answer Analysis**: Triggered asynchronously when submitting an answer (`POST /api/interview/[id]/answer`)
-   - Non-blocking: answer is saved immediately, analysis happens in background
-   - Updates interview document when analysis completes
-   - Analysis page polls every 1.5 seconds for updates
-   - Stores analysis results in `questions[].analysis` object
-
-3. **Interview Feedback**: Triggered when completing an interview (`POST /api/interview/[id]/complete`)
-   - Sends all Q&A pairs along with interview metadata
-   - Generates comprehensive feedback via n8n feedback webhook
-   - Stores feedback in `feedback` object with overallFeedback, strengths, areasForImprovement, nextSteps
-   - Sets interview status to "completed" and updates completedAt timestamp
-
-4. **Mentor Agent Review**: Triggered when requesting mentor feedback (`POST /api/interview/[id]/mentor`)
-   - Sends completed interview data for mentor analysis
-   - Generates detailed critique of question quality and interviewer performance
-   - Stores review in `mentorAgentReviews` array with comprehensive feedback fields
-   - Provides actionable advice for improving future interview sessions
-
-## 🚀 Development Notes
-
-- Uses Next.js 16 with Turbopack for fast development
-- React 19 with Server Components and Client Components
-- TypeScript for type safety
-- MongoDB connection pooling via Mongoose
-- Environment-based configuration
-- Error handling with fallback mechanisms
-- Async processing for non-blocking operations
-- Modern UI with glassmorphism and gradient effects
-- Real-time updates with Server-Sent Events (SSE)
-- Interactive UI components with smooth animations
-- Advanced filtering and data visualization interface
+Team Tech-Bytes.

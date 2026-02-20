@@ -105,7 +105,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
       document.body.innerHTML = `
         <html>
           <head>
-            <title>Interview Results - ${interview.jobRole}</title>
+            <title>Session Results - ${interview.jobRole}</title>
             <style>
               body { font-family: Arial, sans-serif; color: #333; }
               h1, h2, h3 { margin-top: 20px; }
@@ -116,7 +116,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
             </style>
           </head>
           <body>
-            <h1>Interview Results - ${interview.jobRole}</h1>
+            <h1>Session Results - ${interview.jobRole}</h1>
             ${printContents}
           </body>
         </html>

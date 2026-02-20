@@ -74,7 +74,7 @@ const Dashboard = () => {
         <div className="flex items-center justify-between w-full flex-col sm:flex-row gap-4 sm:gap-0">
           <div className="text-center sm:text-left">
             <h1 className="text-2xl sm:text-3xl font-bold text-black dark:text-white mb-1 sm:mb-2">
-              Your Interviews
+              Your Sessions
             </h1>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-500">
               Practice your Interview Skills with AI Agents
@@ -84,7 +84,7 @@ const Dashboard = () => {
           <div className="w-full sm:w-auto flex justify-center sm:block">
             <InterviewBtn
               onClick={handleCreateInterview}
-              text="Create new Interview"
+              text="Create Session"
             />
           </div>
         </div>

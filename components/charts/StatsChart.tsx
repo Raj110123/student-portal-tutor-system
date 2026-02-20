@@ -55,7 +55,7 @@ const StatsChart: React.FC<StatsChartProps> = ({ data }) => {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
       {/* Job Roles Chart */}
       <div className="bg-[#0d0d1a] border border-purple-500/30 rounded-2xl p-6 shadow-2xl">
-        <h3 className="text-xl font-bold text-white mb-4">Interview Distribution by Job Role</h3>
+        <h3 className="text-xl font-bold text-white mb-4">Session Distribution by Subject/Topic</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={jobRoles}
@@ -87,7 +87,7 @@ const StatsChart: React.FC<StatsChartProps> = ({ data }) => {
               labelStyle={{ color: '#c084fc', fontWeight: 'bold' }}
             />
             <Legend />
-            <Bar dataKey="count" fill="#ffffff" name="Interview Count" />
+            <Bar dataKey="count" fill="#ffffff" name="Sessions Count" />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -17,7 +17,7 @@ const ResultsNav = ({
   const router = useRouter();
   return (
     <div className="flex items-center justify-between mb-6 max-sm:flex-col max-sm:gap-4 max-sm:text-center">
-      <h1 className="text-2xl sm:text-3xl font-bold">Interview Results</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold">Sessions Results</h1>
 
       <div className="flex gap-2 flex-wrap justify-center">
         {/* print btn */}

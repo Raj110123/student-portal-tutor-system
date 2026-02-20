@@ -13,7 +13,7 @@ const InterviewNav = ({ interview }: { interview: any }) => {
           </span>
           <div className="text-sm leading-2 max-sm:text-xs">
             <h1 className="text-3xl font-bold tracking-tighter max-sm:text-base">
-              {interview.jobRole} interview
+              {interview.jobRole} Session
             </h1>
             <p className="font-light tracking-tight text-slate-400">
               Secure your future with the right answers

@@ -223,7 +223,7 @@ export default function InterviewList() {
         <div className="w-full min-h-[40vh] flex items-center justify-center px-4">
           <div className="text-center py-6 sm:py-8 w-full max-w-md bg-[var(--input-bg)] rounded-lg">
             <p className="mb-4 text-sm sm:text-base text-gray-400">
-              No interviews found. Start a new interview to practice!
+              No sessions found. Start a new session to practice!
             </p>
           </div>
         </div>

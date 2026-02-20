@@ -40,8 +40,8 @@ const radis = localfont({
 });
 
 export const metadata: Metadata = {
-  title: "InterViewture",
-  description: "Agentic AI Interview",
+  title: "Cognivio",
+  description: "Adaptive AI that learns with you. Get personalized study sessions, real-time feedback, and structured learning paths designed for continuous growth.",
 }; 
 
 export const viewport: Viewport = {

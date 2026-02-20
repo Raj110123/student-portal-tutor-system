@@ -195,7 +195,7 @@ export default function MentorPage() {
             </div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">No Mentor Feedback Yet</h2>
             <p className="text-lg text-purple-600 dark:text-purple-200 max-w-2xl mx-auto leading-relaxed">
-              Start your journey to interview excellence! Complete interviews and request mentor reviews to receive personalized feedback that helps you ask stronger, more targeted questions.
+              Start your journey to Personal excellence! Complete sessions and request mentor reviews to receive personalized feedback that helps you ask stronger, more targeted questions.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <div className="flex items-center gap-2 text-purple-600 dark:text-purple-300">
@@ -222,7 +222,7 @@ export default function MentorPage() {
                   <span className="text-3xl font-bold text-white">{report.totalReviews}</span>
                 </div>
                 <p className="text-purple-200 font-medium">Total Reviews</p>
-                <p className="text-purple-300 text-sm mt-1">Interviews analyzed</p>
+                <p className="text-purple-300 text-sm mt-1">Sessions analyzed</p>
               </div>
 
               <div className="bg-[#1a1a2e] border border-blue-500/30 rounded-2xl p-6">
@@ -231,7 +231,7 @@ export default function MentorPage() {
                   <span className="text-xl font-bold text-white truncate">{report.latestInterviewRole}</span>
                 </div>
                 <p className="text-blue-200 font-medium">Latest Role</p>
-                <p className="text-blue-300 text-sm mt-1">Most recent interview</p>
+                <p className="text-blue-300 text-sm mt-1">Most recent sessions</p>
               </div>
 
               <div className="bg-[#1a1a2e] border border-green-500/30 rounded-2xl p-6">
@@ -253,7 +253,7 @@ export default function MentorPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white">Comprehensive Analysis</h3>
-                    <p className="text-purple-300">{report.latestInterviewRole} Interview</p>
+                    <p className="text-purple-300">{report.latestInterviewRole} Sessions</p>
                   </div>
                 </div>
 

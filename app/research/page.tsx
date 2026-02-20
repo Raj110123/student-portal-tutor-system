@@ -124,7 +124,7 @@ const ResearchDashboard = () => {
       {/* Interview Statistics */}
       <div className="mb-12">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-black dark:text-white">Interview Statistics</h2>
+          <h2 className="text-2xl font-bold text-black dark:text-white">Sessions Statistics</h2>
           <p className="text-black dark:text-gray-400">Distribution of roles and technologies</p>
         </div>
         <StatsChart data={statsData} />

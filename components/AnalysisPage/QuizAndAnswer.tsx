@@ -67,7 +67,7 @@ const QuizAndAnswer = ({
                 <MainButton
                   onClick={onClick}
                   color="blue"
-                  text="Continue Interview to Answer"
+                  text="Continue Sessions to Answer"
                 />
               )}
             </div>

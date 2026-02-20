@@ -115,7 +115,7 @@ const NewInterviewForm = ({
             "AI services is currently busy, Please try again later"
           );
         } else {
-          throw new Error(data.message || "Failed to start interview");
+          throw new Error(data.message || "Failed to start Session");
         }
       }
 
@@ -136,7 +136,7 @@ const NewInterviewForm = ({
       onStartInterview(data.interview);
     } catch (error: any) {
       console.error("Error starting interview: ", error);
-      setError(error.message || "An error occurred while starting interview");
+      setError(error.message || "An error occurred while starting Session");
     } finally {
       setIsSubmitting(false);
     }
@@ -150,24 +150,24 @@ const NewInterviewForm = ({
       >
         <div className="flex flex-col items-center justify-center mt-4 sm:mt-10 text-center">
           <h1 className="text-2xl sm:text-4xl font-semibold text-gray-900 dark:text-white">Welcome Buddy!</h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-2">Create your interview to start your journey!</p>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-2">Create your Session to start your journey!</p>
         </div>
 
         <div className="flex items-center rounded-xl flex-col gap-4 w-[55%] max-sm:w-[95%] max-sm:px-4 p-4 min-h-[70%] mt-4 sm:mt-6">
           {/* job role input */}
           <InterviwFormInputs
-            label="Job Role"
+            label="Subject"
             type="text"
-            placeholder="e.g Frontend Develeoper"
+            placeholder="e.g Maths"
             value={jobRole}
             onChange={(e) => setJobRole(e.target.value)}
           />
 
           {/* job description / tech stack */}
           <InterviwFormInputs
-            label="Job Description"
+            label="Syllabus"
             type="text"
-            placeholder="Mention the Skills and Experience Required"
+            placeholder="Mention the Topics and Experience Required"
             value={techStack}
             onChange={(e) => setTechStack(e.target.value)}
             inputClassName="py-4"
@@ -175,7 +175,7 @@ const NewInterviewForm = ({
 
           {/* years of experience */}
           <InterviwFormInputs
-            label="Years of Experience"
+            label="Class/Standard"
             type="text"
             min={0}
             max={50}
@@ -185,7 +185,7 @@ const NewInterviewForm = ({
 
           {/* resume upload */}
           <div className="flex flex-col w-[100%]">
-            <label className="mb-2 text-sm text-gray-900 dark:text-white">Upload Resume</label>
+            <label className="mb-2 text-sm text-gray-900 dark:text-white">Upload Transcript</label>
             <input
               className="border py-2 cursor-pointer rounded-lg px-4 border-gray-300 dark:border-zinc-700 bg-white dark:bg-transparent text-gray-900 dark:text-white w-[100%]"
               type="file"
@@ -264,7 +264,7 @@ const NewInterviewForm = ({
                 : "bg-[#984CFF] hover:bg-[#974cffba]"
                 }`}
             >
-              {isSubmitting ? "Creating..." : "Start Interview"}
+              {isSubmitting ? "Creating..." : "Start Session"}
             </button>
 
             <button

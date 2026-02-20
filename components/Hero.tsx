@@ -38,15 +38,15 @@ const Hero = () => {
       </div>
       <div className="flex flex-col gap-6 items-center -mt-8 text-[var(--nav-text)] px-4">
         <h1 className="font-semibold text-4xl sm:text-5xl lg:text-7xl text-center leading-tight">
-          AI Powered Agentic Interview
+          AI Academic Agent (Learning Companion)
         </h1>
         <p className="text-lg sm:text-xl text-center max-w-2xl">
-          Agentic AI's that analyzes, advises, and accelerates with unmatched convenience
+          Agentic AI&#39;s that analyzes, advises, and accelerates with unmatched convenience
         </p>
 
         <Link href={"/dashboard"}>
           <Button
-            name="Practice Now"
+            name="Start Learning"
             style={{ marginTop: "16px", fontWeight: "600" }}
           />
         </Link>
